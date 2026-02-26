@@ -8,27 +8,31 @@ import { ArrowRight, Download, Mail } from "lucide-react";
 const skillGroups = [
   {
     label: "Languages",
-    items: ["TypeScript", "JavaScript", "Python", "C++", "Swift", "SQL", "Java"],
+    items: ["TypeScript", "JavaScript", "Python", "SQL", "Java", "C++", "Swift"],
   },
   {
     label: "Frontend",
-    items: ["React", "Next.js", "Tailwind CSS", "Framer Motion", "Canvas API", "WebGL / Three.js"],
+    items: ["React", "Next.js", "Tailwind CSS", "Framer Motion", "Canvas API", "WebGL / Three.js", "SwiftUI"],
   },
   {
     label: "Backend & APIs",
-    items: ["Node.js", "REST APIs", "Next.js API Routes", "Server Actions", "Webhooks", "Resend"],
+    items: ["Node.js", "REST APIs", "GraphQL", "WebSockets", "OAuth", "Server Actions", "Webhooks"],
+  },
+  {
+    label: "Databases",
+    items: ["PostgreSQL", "MongoDB", "Prisma ORM", "Neon Serverless", "SQL"],
   },
   {
     label: "Data & AI",
-    items: ["PostgreSQL", "Prisma ORM", "Plotly.js", "LLMs", "TensorFlow", "Keras", "PyTorch", "Web Audio API"],
+    items: ["TensorFlow", "Keras", "PyTorch", "Pandas", "NumPy", "Jupyter", "LLMs", "Plotly.js"],
   },
   {
     label: "Commerce & Auth",
-    items: ["Shopify Storefront API", "Printful", "Authentication", "Neon Serverless"],
+    items: ["Shopify Storefront API", "Printful", "Resend", "Web Audio API"],
   },
   {
     label: "Infra & Tooling",
-    items: ["Vercel", "AWS", "Azure", "GCP", "GitHub Actions", "CI/CD", "Git", "Vite"],
+    items: ["Docker", "AWS", "Azure", "GCP", "Vercel", "GitHub Actions", "CI/CD", "Git", "Vite"],
   },
 ];
 
