@@ -1,0 +1,56 @@
+---
+title: "Hadean Eon"
+slug: "hadeaneon"
+tagline: "A 3D WebGL browser experience rendering a primordial molten planet. Browser-native internet art built with React Three Fiber and custom GLSL shaders."
+category: "creative"
+tags: ["React Three Fiber", "Three.js", "GLSL", "WebGL", "Web Audio API", "TypeScript", "Next.js"]
+featured: true
+featuredOrder: 2
+catalogOnly: false
+liveUrl: "https://www.hadeaneon.com"
+repoUrl: "https://github.com/dylantneal/hadeaneon"
+thumbnail: "/images/projects/hadeaneon-thumb.png"
+screenshots: []
+status: "live"
+stackSummary: "Next.js, React Three Fiber, Three.js, GLSL, Web Audio API, TypeScript"
+publishedAt: "2024-06-01"
+---
+
+## What It Is
+
+HadeanEon is a 3D WebGL browser experience built with React Three Fiber and Three.js. It renders a primordial planet in a state of geological formation, referencing the Hadean eon, the earliest period of Earth's history when the planet was entirely molten. It is browser-native internet art, not an application.
+
+## Why It Exists
+
+Most portfolio projects demonstrate the web as a delivery mechanism. HadeanEon explores it as a creative medium. Specifically, what becomes possible when you push WebGL shaders, real-time audio analysis, and 3D scene composition into something that exists purely to be watched.
+
+## What I Built
+
+- **Layered sphere system:** A molten core, cooling crust layer, corona shell, and atmosphere veil rendered as separate shader passes. The core uses FBM noise for magma surface variation, localized hot spots, crack glow, and a fresnel rim. Each layer blends independently based on phase state.
+- **Custom GLSL shaders:** Vertex displacement via fractal Brownian motion, with fragment shaders driving color, turbulence, emissive intensity, and crust formation, all controlled by real-time uniforms.
+- **Audio reactivity:** The Web Audio API analyzes incoming audio into low, mid, and high frequency bands each frame. Those values are smoothed and piped directly into shader uniforms, so bass frequencies pulse the magma heat and high frequencies shimmer the corona.
+- **Orbit controls with camera drift:** Users can rotate and zoom the sphere freely. The camera also drifts autonomously on a slow sinusoidal path, keeping it active without input.
+- **Post-processing pipeline:** Bloom with luminance thresholding and a vignette layer via `@react-three/postprocessing`, giving the piece a cinematic quality.
+- **Adaptive quality tiers:** Three presets (low, medium, high) that scale device pixel ratio, particle count, bloom intensity, shader geometry detail, and whether the veil and post-processing layers render at all. Tier is auto-detected on load.
+
+## Tech Stack
+
+- **Framework:** Next.js with React
+- **3D Rendering:** React Three Fiber + Three.js
+- **Shaders:** GLSL (custom vertex and fragment)
+- **Audio:** Web Audio API
+- **Post-processing:** @react-three/postprocessing
+- **Language:** TypeScript
+
+## Key Decisions & Tradeoffs
+
+- **WebGL over Canvas 2D:** The molten surface required per-vertex displacement and fragment-level noise. Canvas 2D cannot do GPU shader work, so Three.js with custom GLSL was the only viable path to the intended visual.
+- **React Three Fiber over raw Three.js:** The layered scene architecture (core, crust, corona, veil, particles, post-processing) maps cleanly onto React's component model. Each layer owns its own uniforms and frame loop logic.
+- **Audio mapped to shader uniforms:** Rather than triggering animations on a beat, frequency data is smoothed and injected continuously into the shaders each frame. This makes the visual feel genuinely connected to sound rather than reacting to it.
+- **Adaptive quality at load time:** The experience is GPU-intensive. Auto-detecting capability and scaling before the first frame keeps it smooth across hardware without requiring the user to configure anything.
+
+## Results
+
+- Live at hadeaneon.com
+- Smooth experience across desktop and mobile browsers
+- Demonstrates WebGL shader depth, real-time audio processing, and creative coding beyond typical web application work

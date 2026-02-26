@@ -1,0 +1,47 @@
+---
+title: "PlotWrite"
+slug: "plotwrite"
+tagline: "An AI system that writes novels — presented through a web interface that explains the architecture and guides users through on-prem setup."
+category: "ai-tools"
+tags: ["Next.js", "React", "AI/ML", "Python", "TypeScript"]
+featured: false
+catalogOnly: true
+thumbnail: "/images/projects/plotwrite-thumb.png"
+screenshots: []
+status: "live"
+stackSummary: "Next.js, React, TypeScript, Python, AI/ML"
+publishedAt: "2025-03-10"
+---
+
+## What It Is
+
+PlotWrite is an AI system purpose-built for long-form fiction generation. The web interface at plotwrite.com serves as the product's front door: explaining the architecture, showing sample outputs, and walking users through on-prem installation and usage.
+
+## Why It Exists
+
+Most generative AI tools optimize for short-form content (tweets, emails, marketing copy). Novel-length fiction requires fundamentally different approaches: persistent world state, character continuity, plot arc management, and stylistic consistency across tens of thousands of words. PlotWrite tackles this as a systems problem, not just a prompting problem.
+
+## What I Built
+
+- **The AI pipeline** — a multi-stage generation system that decomposes novel writing into planning, outlining, scene generation, and revision passes
+- **The web presentation layer** — plotwrite.com explains the system architecture, displays sample outputs, and provides installation documentation
+- **On-prem tooling** — setup scripts and configuration so users can run the system on their own hardware (GPU-accelerated)
+- **Prompt engineering framework** — structured prompt templates that maintain narrative coherence across long generation runs
+
+## Tech Stack
+
+- **Website:** Next.js, React, TypeScript, Tailwind CSS
+- **AI Backend:** Python, local LLM inference
+- **Distribution:** On-premises only (no hosted API yet)
+
+## Key Decisions & Tradeoffs
+
+- **On-prem first:** Chose local execution over a hosted API to avoid inference costs at scale and give users full control over model selection and fine-tuning. Tradeoff: higher barrier to entry, but stronger for power users.
+- **Multi-pass architecture:** Rather than generating a novel in a single prompt chain, the system uses explicit planning → drafting → revision stages. This mirrors how human authors work and dramatically improves coherence.
+- **Website as documentation product:** Since users can't "try it in browser," the site needed to do heavy lifting: architecture diagrams, sample outputs, and step-by-step guides replace a typical SaaS onboarding flow.
+
+## Results
+
+- Functional system generating novel-length fiction with measurable coherence improvements over single-pass approaches
+- Website serves as effective product explainer and user onboarding
+- Active development toward a hosted API version

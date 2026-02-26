@@ -1,0 +1,53 @@
+---
+title: "Clarity Lab"
+slug: "clarity-lab"
+tagline: "An independent research platform that aggregates and visualizes primary data on large-scale global challenges across nine domains."
+category: "data-research"
+tags: ["React", "TypeScript", "Plotly.js", "Canvas API", "Vite"]
+featured: true
+featuredOrder: 1
+catalogOnly: false
+liveUrl: "https://www.clarity-lab.net"
+thumbnail: "/images/projects/clarity-lab-thumb.png"
+screenshots: []
+status: "live"
+stackSummary: "React 18, TypeScript, Plotly.js, CSS Modules, Vite, Vercel"
+publishedAt: "2025-01-15"
+---
+
+## What It Is
+
+Clarity Lab is an independent research platform that aggregates, contextualizes, and visualizes primary data on large-scale global challenges. Rather than scattering statistics across dozens of sources, it brings nine research domains into a single, well-designed interface built for a general audience.
+
+## Why It Exists
+
+Public data on climate, health, economics, and inequality is abundant but fragmented. Existing resources tend to be single-issue, academically inaccessible, or visually impenetrable. Clarity Lab was built around a simple question: *what if rigorous global data felt as intuitive to explore as a well-designed product?*
+
+## What I Built
+
+I designed and built the entire platform from scratch, owning the full front-end architecture, design system, and data visualization layer. This included:
+
+- **Interactive visualization system** — reusable chart components built on Plotly.js with typed React wrappers, supporting configurable layouts, responsive resizing, and inline source attribution
+- **Long-form research articles** — nine fully built insight pages covering distinct global domains, each with structured narrative sections, embedded interactive charts, and a sticky IntersectionObserver-powered table of contents
+- **Component-based design system** — 50+ CSS custom properties, CSS Modules, glassmorphism effects, keyframe animations, and a consistent responsive grid across five breakpoints
+- **Custom canvas animation** — a 600-line particle network built on the Canvas API using dual particle systems, scroll parallax, mouse interaction, and depth-based rendering, optimized with `requestAnimationFrame`
+- **SEO infrastructure** — per-page metadata, canonical URLs, and Open Graph tags on all content pages via `react-helmet-async`
+
+## Tech Stack
+
+- **Framework:** React 18 with TypeScript, bundled with Vite
+- **Visualization:** Plotly.js with custom React component wrappers
+- **Styling:** CSS Modules with a global CSS custom property design system
+- **Deployment:** Vercel
+
+## Key Decisions & Tradeoffs
+
+- **Static data at build time:** Opted for data embedded at build time for reliability and fast load performance, with a clear path toward live API integration documented in the project roadmap.
+- **Article-first information architecture:** Structured content as long-form data narratives rather than isolated dashboards, embedding visualizations directly within analytical context to improve comprehension.
+- **CSS Modules over a utility framework:** Chose scoped CSS Modules with custom properties over a utility-first framework to maintain full design flexibility and consistent theming across a large component surface.
+
+## Results
+
+- Live, publicly accessible, and actively maintained
+- Sub-second load times on all pages
+- Full mobile responsiveness across all nine research domains

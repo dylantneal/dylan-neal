@@ -1,0 +1,59 @@
+---
+title: "AlienInvaders"
+slug: "alieninvaders"
+tagline: "A browser-based Space Invaders game built from scratch with a custom game engine, wave-based boss fights, destructible shields, and power-ups."
+category: "interactive"
+tags: ["React", "TypeScript", "Canvas API", "Vite", "Game Dev"]
+featured: true
+featuredOrder: 3
+catalogOnly: false
+liveUrl: "https://www.alieninvaders.net"
+repoUrl: "https://github.com/dylantneal/space-invaders-react"
+thumbnail: "/images/projects/alieninvaders-thumb.png"
+screenshots: []
+status: "live"
+stackSummary: "React 19, TypeScript, HTML5 Canvas, Vite, Vercel"
+publishedAt: "2024-11-20"
+---
+
+## What It Is
+
+AlienInvaders is a browser-based Space Invaders game built from scratch with React and TypeScript. It runs entirely in the browser using a custom game engine with no external libraries, featuring wave-based boss fights, destructible shields, and power-ups.
+
+## Why It Exists
+
+A game is one of the more demanding things you can build in a browser. It requires tight control over frame timing, rendering performance, collision detection, and state management all at once, with zero tolerance for jank. AlienInvaders was built as a serious technical exercise and a genuinely fun, playable product.
+
+## What I Built
+
+- **Game loop engine:** A dual-loop system using `requestAnimationFrame` with a fixed timestep for logic updates (60 per second) and a separate rendering loop, ensuring consistent gameplay speed regardless of screen refresh rate.
+- **Entity system:** Modular player, alien, projectile, shield, and boss objects managed as pure functions in a dedicated game engine module, cleanly separated from React state.
+- **Canvas rendering:** All game graphics drawn procedurally with the HTML5 Canvas 2D API, including gradient fills, glow effects, and two-frame animation cycles for aliens.
+- **Boss system:** Phased boss encounters every three waves with scaling health, enrage states, and multi-stage attack patterns.
+- **Destructible shields:** Pixel-grid-based shields that erode on impact, tracked as boolean arrays.
+- **Difficulty scaling:** Alien speed, fire rate, and boss health scale with wave number. A dynamic speed multiplier kicks in as aliens are eliminated.
+- **Wave themes:** Six visual themes (classic, ice, inferno, toxic, cosmic, shadow) with variants that cycle across waves for visual variety.
+- **Power-ups:** Rapid fire, spread shot, shield, and score multiplier pickups with time-based expiration.
+- **Audio:** Sound effects implemented with the Web Audio API.
+- **Score and state:** Persistent high scores via `localStorage`, with clean pause, game over, and restart flows.
+
+## Tech Stack
+
+- **Framework:** React 19 with Vite (UI shell and lifecycle management)
+- **Rendering:** HTML5 Canvas API (game viewport)
+- **Language:** TypeScript throughout
+- **Animations:** Framer Motion (UI transitions)
+- **Deployment:** Vercel
+
+## Key Decisions & Tradeoffs
+
+- **Canvas over DOM rendering:** The game viewport uses Canvas rather than CSS-animated DOM elements. Canvas gives consistent sub-millisecond draw times across dozens of entities per frame, where DOM manipulation would introduce layout thrashing.
+- **Fixed timestep game loop:** Logic updates are decoupled from render frames. Physics and collision run at a steady 60 updates per second regardless of the device's refresh rate, so gameplay speed never varies between a 60Hz and 120Hz display.
+- **React for shell, imperative for game:** The game engine runs imperatively via refs and direct Canvas manipulation. React handles routing, UI overlays (score, menus, wave titles), and high score state. This keeps the hot path free of React re-renders while still benefiting from React's component model for everything around the game.
+- **Procedural graphics:** No sprite sheets. All visuals are drawn at runtime with Canvas, keeping the bundle small and eliminating asset loading dependencies.
+
+## Results
+
+- Live and playable at alieninvaders.net
+- Consistent 60fps on modern desktop browsers
+- Clean separation between the game engine and the UI framework

@@ -1,0 +1,58 @@
+---
+title: "Of Blood"
+slug: "of-blood"
+tagline: "The official website for Of Blood, a cosmic death metal band from Chicago. Streaming, merchandise, tour dates, and per-track immersive audio-reactive experiences."
+category: "creative"
+tags: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Shopify", "Printful", "Web Audio API", "Canvas API", "Framer Motion"]
+featured: true
+featuredOrder: 4
+catalogOnly: false
+liveUrl: "https://www.of-blood.com"
+repoUrl: "https://github.com/dylantneal/of-blood"
+thumbnail: "/images/projects/of-blood-thumb.png"
+screenshots: []
+status: "live"
+stackSummary: "Next.js, TypeScript, Tailwind CSS, Shopify Storefront API, Printful, Web Audio API, Framer Motion, Vercel"
+publishedAt: "2024-08-15"
+---
+
+## What It Is
+
+Of Blood is the official website for Of Blood, a cosmic death metal band from Chicago. It serves as the band's complete digital product: streaming their debut EP, selling merchandise, listing tour dates, hosting video content, and delivering an immersive per-track music experience unlike a standard band site.
+
+## Why It Exists
+
+A band's website is a real product with real users: fans, press, venues, and labels. It needs to load fast, look intentional, work on every device, and carry a heavy content load without feeling cluttered. This project also had a genuine commercial dimension: actual merchandise being sold to real customers with real fulfillment. That demanded the same engineering rigor as any commercial web product, just wrapped in a very particular aesthetic.
+
+## What I Built
+
+- **Immersive music experience:** Per-track fullscreen pages with audio-reactive particle systems, synchronized lyrics, and individual visual themes built on top of the Web Audio API and Canvas.
+- **Global persistent audio player:** A custom player that stays alive across navigation, with play/pause, seeking, volume, and track queueing.
+- **Lyrics engine:** JSON-timed lyrics with anticipation and linger windows, auto-scrolling with spring physics, and visual focus transitions.
+- **Full e-commerce pipeline:** Shopify Storefront API for the product catalog and cart, Printful for print-on-demand fulfillment, automated order and shipping webhooks, and transactional email via Resend.
+- **Tour management system:** A public tour dates page plus a password-protected admin interface for adding and editing shows, with show media (photos and YouTube recaps) per date.
+- **Media hub:** YouTube video gallery and a static Instagram feed.
+- **Brand-driven design system:** Cinzel for display type, Inter for body, a palette of near-black, blood red, and antique gold, film grain overlay, and glow effects enforced consistently across every page.
+- **JSON-based content architecture:** Releases, shows, lyrics, and social content managed through structured JSON files with a lightweight custom admin layer.
+
+## Tech Stack
+
+- **Framework:** Next.js (App Router) with TypeScript
+- **Styling:** Tailwind CSS with CSS custom properties mapped to brand tokens
+- **Animation:** Framer Motion for transitions, Web Audio API and Canvas for audio-reactive visuals
+- **Commerce:** Shopify Storefront API, Printful, Resend
+- **Deployment:** Vercel
+
+## Key Decisions & Tradeoffs
+
+- **Audio architecture as a first-class concern:** The music experience is the centerpiece of the site. Building a persistent global player required a shared React audio context that survives navigation, while the immersive experience pages layer Web Audio analysis on top of it to drive visualizations in real time. Separating playback state from visualization state kept both systems clean and independently replaceable.
+- **Shopify plus Printful rather than a custom stack:** Running real e-commerce for a band means handling inventory, fulfillment, and payment without a dedicated ops team. Using Shopify as the cart and checkout layer and Printful as the fulfillment backend delegates the hard operational problems while keeping the storefront fully custom and on-brand.
+- **JSON content files with a minimal admin:** Rather than integrating a headless CMS, content lives in version-controlled JSON files. A simple password-protected admin handles tour date edits, which are the only content that changes frequently. This keeps the infrastructure light and the codebase self-contained.
+- **Per-track visual identity:** Each track has its own defined theme: color palette, particle system type (tendrils, embers, stars), background imagery, and layout variant. These are declared in data rather than hardcoded, so adding a new release means extending a config object rather than writing new component logic.
+
+## Results
+
+- Live at of-blood.com
+- Full e-commerce with Shopify checkout and Printful fulfillment
+- Three-track debut EP with per-track immersive experiences and synchronized lyrics
+- Functions as the band's primary digital product, press kit, and storefront
