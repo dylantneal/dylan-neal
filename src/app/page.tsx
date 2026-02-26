@@ -35,8 +35,8 @@ const skillGroups = [
     items: ["Docker", "AWS", "Azure", "GCP", "Vercel", "GitHub Actions", "CI/CD", "Git", "Vite"],
   },
   {
-    label: "Testing & Quality",
-    items: ["Jest", "Vitest", "Cypress", "Playwright", "ESLint", "TypeScript", "Postman"],
+    label: "Architecture & Patterns",
+    items: ["Microservices", "Event-driven", "REST", "MVC", "Component-driven", "Agile / Scrum", "TDD", "DevOps"],
   },
 ];
 
