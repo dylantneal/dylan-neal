@@ -8,7 +8,7 @@ import { ArrowRight, Download, Mail } from "lucide-react";
 const skillGroups = [
   {
     label: "Languages",
-    items: ["TypeScript", "JavaScript", "Python", "C++", "Swift", "SQL", "GLSL"],
+    items: ["TypeScript", "JavaScript", "Python", "C++", "Swift", "SQL", "Java"],
   },
   {
     label: "Frontend",
@@ -20,7 +20,7 @@ const skillGroups = [
   },
   {
     label: "Data & AI",
-    items: ["PostgreSQL", "Prisma ORM", "Plotly.js", "LLMs", "Web Audio API"],
+    items: ["PostgreSQL", "Prisma ORM", "Plotly.js", "LLMs", "TensorFlow", "Keras", "PyTorch", "Web Audio API"],
   },
   {
     label: "Commerce & Auth",
@@ -28,7 +28,7 @@ const skillGroups = [
   },
   {
     label: "Infra & Tooling",
-    items: ["Vercel", "Azure", "GitHub Actions", "CI/CD", "Git", "Vite"],
+    items: ["Vercel", "AWS", "Azure", "GCP", "GitHub Actions", "CI/CD", "Git", "Vite"],
   },
 ];
 
