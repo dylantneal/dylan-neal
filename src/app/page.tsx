@@ -34,6 +34,10 @@ const skillGroups = [
     label: "Infra & Tooling",
     items: ["Docker", "AWS", "Azure", "GCP", "Vercel", "GitHub Actions", "CI/CD", "Git", "Vite"],
   },
+  {
+    label: "Testing & Quality",
+    items: ["Jest", "Vitest", "Cypress", "Playwright", "ESLint", "TypeScript", "Postman"],
+  },
 ];
 
 export default function Home() {
