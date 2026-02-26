@@ -17,8 +17,9 @@ export default function ProjectsPage() {
         Projects
       </h1>
       <p className="mt-3 max-w-2xl text-surface/60">
-        A catalog of products, tools, and experiments I&apos;ve built — from
-        data platforms to game engines to internet art.
+        A catalog of products, tools, and experiments I&apos;ve built: data
+        platforms, game engines, WebGL experiences, and commercial web
+        products.
       </p>
 
       <ProjectsIndexClient projects={projects} />

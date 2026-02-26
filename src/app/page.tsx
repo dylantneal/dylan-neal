@@ -6,10 +6,30 @@ import { HeroChip } from "@/components/three/HeroChip";
 import { ArrowRight, Download, Mail } from "lucide-react";
 
 const skillGroups = [
-  { label: "Languages", items: ["TypeScript", "Python", "C++", "Swift"] },
-  { label: "Frameworks", items: ["Next.js", "React"] },
-  { label: "Data & AI", items: ["D3.js", "LLMs", "Canvas API"] },
-  { label: "Infra", items: ["Vercel", "Git", "CI/CD"] },
+  {
+    label: "Languages",
+    items: ["TypeScript", "JavaScript", "Python", "C++", "Swift", "SQL", "GLSL"],
+  },
+  {
+    label: "Frontend",
+    items: ["React", "Next.js", "Tailwind CSS", "Framer Motion", "Canvas API", "WebGL / Three.js"],
+  },
+  {
+    label: "Backend & APIs",
+    items: ["Node.js", "REST APIs", "Next.js API Routes", "Server Actions", "Webhooks", "Resend"],
+  },
+  {
+    label: "Data & AI",
+    items: ["PostgreSQL", "Prisma ORM", "Plotly.js", "LLMs", "Web Audio API"],
+  },
+  {
+    label: "Commerce & Auth",
+    items: ["Shopify Storefront API", "Printful", "Authentication", "Neon Serverless"],
+  },
+  {
+    label: "Infra & Tooling",
+    items: ["Vercel", "Azure", "GitHub Actions", "CI/CD", "Git", "Vite"],
+  },
 ];
 
 export default function Home() {
