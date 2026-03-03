@@ -99,7 +99,7 @@ export default function Home() {
               href="/projects"
               className="group inline-flex items-center gap-2.5 rounded bg-gold px-7 py-3.5 font-mono text-[13px] font-semibold text-ink transition-all hover:bg-gold-light hover:shadow-[0_0_32px_rgba(197,164,78,0.35)]"
             >
-              View Projects
+              View Works
               <ArrowRight size={14} className="transition-transform group-hover:translate-x-0.5" />
             </Link>
             <Link
@@ -129,7 +129,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Featured Projects ─────────────────────────────────────────────── */}
+      {/* ── Featured Works ──────────────────────────────────────────────── */}
       <section className="relative">
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-surface/[0.08] to-transparent" />
         <div className="mx-auto max-w-5xl px-6 py-20 md:py-24">
@@ -139,14 +139,14 @@ export default function Home() {
                 Featured Work
               </p>
               <h2 className="mt-2 font-heading text-2xl font-bold tracking-tight text-surface md:text-3xl">
-                Selected Projects
+                Selected Works
               </h2>
             </div>
             <Link
               href="/projects"
               className="hidden items-center gap-1.5 font-mono text-[11px] text-surface/40 transition-colors hover:text-gold sm:inline-flex"
             >
-              All projects
+              All works
               <ArrowRight size={11} />
             </Link>
           </div>
@@ -160,7 +160,7 @@ export default function Home() {
               href="/projects"
               className="inline-flex items-center gap-1.5 font-mono text-[11px] text-surface/40 transition-colors hover:text-gold"
             >
-              View all projects
+              View all works
               <ArrowRight size={11} />
             </Link>
           </div>
