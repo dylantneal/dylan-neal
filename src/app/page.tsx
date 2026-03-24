@@ -3,7 +3,7 @@ import Image from "next/image";
 import { getFeaturedProjects } from "@/lib/content/projects";
 import { ProjectCard } from "@/components/projects/ProjectCard";
 import { HeroChip } from "@/components/three/HeroChip";
-import { ArrowRight, Download, Mail } from "lucide-react";
+import { ArrowRight, Mail } from "lucide-react";
 
 const skillGroups = [
   {
@@ -101,13 +101,6 @@ export default function Home() {
             >
               View Works
               <ArrowRight size={14} className="transition-transform group-hover:translate-x-0.5" />
-            </Link>
-            <Link
-              href="/resume"
-              className="inline-flex items-center gap-2 font-mono text-[12px] text-surface/40 transition-colors hover:text-gold"
-            >
-              <Download size={13} />
-              Resume
             </Link>
             <a
               href="mailto:dyl.neal@gmail.com"
@@ -215,13 +208,6 @@ export default function Home() {
               <Mail size={14} />
               Get in Touch
             </a>
-            <Link
-              href="/resume"
-              className="inline-flex items-center gap-2.5 rounded border border-surface/10 px-6 py-3 font-mono text-[13px] text-surface/60 transition-all hover:border-gold/30 hover:text-gold"
-            >
-              <Download size={14} />
-              Download Resume
-            </Link>
           </div>
         </div>
       </section>
