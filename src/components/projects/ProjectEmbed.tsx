@@ -47,7 +47,6 @@ export function ProjectEmbed({ url, title, defaultExpanded = false }: ProjectEmb
           className="h-full w-full border-0"
           loading="lazy"
           sandbox="allow-scripts allow-same-origin"
-          allow="autoplay 'none'"
         />
       </div>
     </section>

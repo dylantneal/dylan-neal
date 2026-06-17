@@ -53,7 +53,7 @@ export function LivePreview({ url, title, interactive = false }: LivePreviewProp
           />
         </div>
       ) : (
-        <div className="flex h-full w-full items-center justify-center bg-board-light/10">
+        <div className="flex h-full w-full flex-col items-center justify-center gap-2 bg-board-light/10 px-3 text-center">
           <span className="font-mono text-xs text-surface/20">Loading...</span>
         </div>
       )}

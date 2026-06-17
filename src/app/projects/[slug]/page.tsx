@@ -52,7 +52,6 @@ export default async function ProjectDetailPage({
         <ProjectEmbed
           url={project.liveUrl}
           title={project.title}
-          defaultExpanded={slug === "alieninvaders"}
         />
       )}
 

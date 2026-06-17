@@ -1,0 +1,76 @@
+---
+title: "COVID Flow"
+slug: "covid-flow"
+tagline: "A research dashboard that ingests CDC wastewater surveillance data, transforms it into weekly community activity indices, and visualizes trends, forecasts, and model quality for Illinois and Cook County."
+category: "data-research"
+tags: ["Next.js", "TypeScript", "Supabase", "Python", "PyTorch", "Recharts", "Three.js", "Tailwind CSS", "shadcn/ui"]
+featured: true
+featuredOrder: 2
+catalogOnly: false
+liveUrl: "https://www.covidflow.com/"
+thumbnail: "/images/projects/covid-flow-thumb.png"
+screenshots: []
+status: "live"
+stackSummary: "Next.js 16, TypeScript, Supabase Postgres, Python 3.12, PyTorch, Recharts, Three.js, Tailwind CSS, shadcn/ui, GitHub Actions, Vercel"
+publishedAt: "2026-06-17"
+---
+
+## What It Is
+
+COVID Flow is an open research platform that turns the CDC National Wastewater Surveillance System (NWSS) into readable weekly trends for Illinois and Cook County. Rather than exposing raw lab tables or case counts distorted by home testing, it aggregates sewershed measurements into population-level activity indices, quality scores, and short-horizon forecasts in a single interface built for a general audience.
+
+The site covers the full loop: automated weekly ingestion from public CDC releases, cleaned and precomputed metrics in Postgres, interactive regional dashboards, and a Model Lab where baseline and learned-dynamics forecasts are compared honestly on held-out data.
+
+## Why It Exists
+
+Community COVID signal still lives in wastewater long after clinical reporting weakened, but NWSS data is fragmented, technical, and easy to misread. Existing dashboards tend to be either too narrow (single charts with no context), too clinical (LOD flags and lab metadata with no narrative), or too promotional (ML models shipped without baseline comparison).
+
+COVID Flow was built around a different question: **what if wastewater surveillance felt as clear as a well-designed product and as honest as a research paper?** The platform publishes methods, quality flags, and model limits up front. It treats the ensemble forecast as the trusted production view and keeps experimental Neural ODE work in a labeled research layer until it earns promotion on held-out weeks.
+
+## What I Built
+
+I designed and built the full stack from scratch: data pipeline, database schema, forecasting and dynamics models, and the public-facing web application.
+
+- **End-to-end data pipeline** - Python batch jobs that download the national CDC CSV weekly, upsert raw samples to Supabase, clean Illinois observations with explicit quality gates, roll up site- and region-level weekly metrics, score past forecasts, and generate new predictions. Orchestrated via GitHub Actions every Saturday and locally through a single `run_weekly_pipeline.py` entrypoint.
+- **Layered Postgres schema** - Twelve tables across six migrations following a bronze -> silver -> gold pattern: raw CDC mirror, cleaned observations, precomputed weekly metrics, and a model registry with predictions, actuals, and Neural ODE derivative samples. Row-level security separates public dashboard reads from private ingestion tables.
+- **Regional dashboards** - Illinois and Cook County pages with summary cards, historical activity charts, data quality panels, sewershed site tables, and ensemble forecast sections. Ensemble-first by default; advanced compare mode overlays a frozen research Neural ODE candidate with clear origin-week labeling.
+- **Interactive Illinois county map** - SVG choropleth built with D3 geo projections and bundled TopoJSON, with a time slider, playback controls, and per-county hover cards. Counties are colored by population-weighted activity index; hatched regions indicate no NWSS coverage (not "low COVID").
+- **Forecasting and Model Lab** - Phase 6 baselines (persistence, moving average, trend, seasonal naive, ensemble) with rolling-origin evaluation; Phase 7 Neural ODE as a baseline-anchored correction layer with shrinkage gates, calibrated uncertainty bands, and explicit promotion gates. Model Lab surfaces holdout MAE, interval coverage, regime breakdown, and research status.
+- **Custom Three.js hero** - WebGL particle field of stylized virus meshes with scroll parallax, mouse interaction, and reduced-motion support on the home page.
+- **SEO and accessibility infrastructure** - Per-page metadata, Open Graph tags, structured data, section navigation on long dashboards, and plain-language copy separating community trends from personal medical risk.
+- **Documentation** - Architecture guides, SQL/data reference, Neural ODE explainer, and deployment runbooks (`docs/DATA.md`, `docs/NEURAL_ODE_EXPLAINED.md`, `docs/PHASE7.md`, and related docs).
+
+## Tech Stack
+
+- **Frontend:** Next.js 16 (App Router), React 19, TypeScript
+- **UI:** Tailwind CSS 4, shadcn/ui, Radix primitives
+- **Charts:** Recharts (activity, forecast, derivative, Model Lab)
+- **Map:** D3 Geo + TopoJSON to inline SVG
+- **3D hero:** Three.js (WebGL)
+- **Database:** Supabase Postgres + Storage + RLS
+- **Data pipeline:** Python 3.12, pandas-style batch scripts
+- **ML:** PyTorch, torchdiffeq (Neural ODE)
+- **Monorepo:** npm workspaces (`apps/web`, `packages/database`)
+- **CI:** GitHub Actions (lint, typecheck, Vitest, build)
+- **CD (app):** Vercel (push-to-deploy)
+- **CD (data):** GitHub Actions cron (weekly NWSS refresh)
+
+## Key Decisions & Tradeoffs
+
+- **Precomputed metrics over compute-on-read** - Weekly activity indices, quality scores, and forecasts are materialized in Postgres by the pipeline rather than calculated at request time. This keeps dashboard loads fast and makes model evaluation reproducible, at the cost of a batch refresh cadence (weekly, not real-time).
+- **Server Components and Supabase direct reads** - The dashboard fetches data on the server via the Supabase JS client and anon key, with no custom REST API layer. Simpler architecture and fewer moving parts; tradeoff is that read logic lives in Next.js data modules with ISR caching (`revalidate` plus `unstable_cache`).
+- **Ensemble-first, research-gated ML** - Neural ODE forecasts are stored as `candidate` runs and compared against baselines on a held-out slice before any production promotion. v1.7.5 established calibrated intervals and selective short-horizon correction but narrowly missed 4-week ensemble lift, a documented negative result treated as success rather than failure.
+- **Illinois depth over national breadth** - Raw ingestion is national, but cleaning, modeling, and UI focus on Illinois and Cook County (about 100 sewersheds, 236 continuous weekly rows). This deliberate scope cut shipped a polished regional product instead of a shallow nationwide map.
+- **Honest quality scoring** - A composite 0-1 quality score with explicit flags (below LOD, inhibition, sparse sampling) flows from sample to site-week to region-week. The UI warns when interpretation should be cautious instead of hiding noisy lab metadata.
+- **Separate write and read paths** - Python pipeline writes with the service role key; the public site reads with RLS-scoped anon access. No user accounts in v1; the product is a read-only public dashboard.
+
+## Results
+
+- **Live and maintained** - Production deploy on Vercel with automated Saturday data refresh via GitHub Actions
+- **236 weeks** of continuous Illinois and Cook County weekly metrics (Nov 2021 to present)
+- **Full-stack ownership** - Ingestion, schema, forecasting, learned dynamics research, UI, CI, and documentation in one monorepo
+- **Research-positive Phase 7 outcome** - Neural ODE infrastructure complete; model mostly abstains unless corrections help; intervals calibrate near 80% nominal; ensemble remains production default
+- **Frontend test coverage** - Vitest unit tests for forecast charts, quality panels, formatting helpers, and public route smoke checks; ESLint and TypeScript run in CI on every push to `main`
+- **Mobile-responsive dashboards** with accessible map controls, trend chips, and collapsible advanced model compare
+
+_Educational research visualization. Not a medical diagnostic tool. Data from the U.S. CDC National Wastewater Surveillance System (NWSS)._
