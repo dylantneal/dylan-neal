@@ -1,0 +1,123 @@
+---
+title: "Multi-Sensor Target Tracking"
+slug: "target-track"
+tagline: "A physics-based simulation and interactive 3D visualization of radar and infrared sensor fusion for tracking a maneuvering target."
+category: "data-research"
+tags: ["C++20", "JavaScript", "Canvas API", "Python", "Matplotlib", "Sensor Fusion"]
+featured: true
+featuredOrder: 4
+catalogOnly: false
+liveUrl: "https://target-track.com"
+repoUrl: "https://github.com/dylantneal/multi-sensor-target-tracking"
+thumbnail: "/images/projects/target-track-thumb.png"
+screenshots: []
+status: "live"
+stackSummary: "C++20, JavaScript, Canvas API, Python, pandas, NumPy, Matplotlib, GitHub Actions, Vercel"
+publishedAt: "2026-09-10"
+---
+
+## What It Is
+
+Multi-Sensor Target Tracking is an end-to-end simulation of a real estimation problem: determining the position and velocity of a moving target from noisy, incomplete sensor measurements.
+
+A radar measures range and direction but occasionally misses detections. An infrared sensor provides more precise bearing measurements but cannot determine range on its own. The application combines both streams to estimate the target's motion, quantify uncertainty, and expose cases where the tracker becomes overconfident.
+
+The browser-based viewer replays each simulation in an interactive 3D environment. It displays the true trajectory, estimated track, sensor measurements, uncertainty ellipsoid, error vector, and live statistical diagnostics.
+
+## Why It Exists
+
+Tracking systems are often evaluated only by how closely their estimates match reality. That leaves out an equally important question: does the system accurately understand its own uncertainty?
+
+A tracker can produce relatively small errors and still be unsafe if it reports more confidence than the evidence supports. I built this project to explore that distinction. It compares a conventional Extended Kalman Filter with an adaptive Interacting Multiple Model filter and makes their behavior visible frame by frame.
+
+The result is more than a tracking demonstration. It is an investigation into model mismatch, uncertainty calibration, and the way statistical consistency changes during sudden maneuvers.
+
+## What I Built
+
+I designed and implemented the complete simulation, estimation, analysis, testing, and visualization pipeline.
+
+- **Physics-based target simulation:** A configurable 3D target model with position, velocity, timed acceleration maneuvers, deterministic seeds, and multiple operating scenarios.
+- **Radar and infrared sensor models:** Independent sensors with configurable update rates, detection probabilities, maximum ranges, angular noise, range noise, atmospheric attenuation, and realistic missed detections.
+- **Extended Kalman Filter:** A six-state nonlinear tracker that fuses radar and infrared measurements through analytical measurement models, Jacobians, sequential scalar updates, and covariance propagation.
+- **Interacting Multiple Model filter:** An adaptive bank of motion models that mixes state estimates, updates model probabilities from measurement likelihoods, and incorporates disagreement between models into the combined uncertainty.
+- **Statistical consistency diagnostics:** Live NEES and NIS measurements that compare actual estimation error with the uncertainty reported by the tracker. The viewer highlights overconfident sections directly on the trajectory.
+- **Interactive 3D viewer:** A dependency-free JavaScript renderer built with the Canvas API. It includes orbit, top-down, radar, and chase cameras; timeline playback; sensor beams; measurement markers; uncertainty ellipsoids; layer controls; and an EKF/IMM comparison toggle.
+- **Scenario system:** Reproducible configurations covering benign cruise, baseline maneuvers, aggressive maneuvers, and degraded sensor conditions.
+- **Analysis pipeline:** Python tools for trajectory plots, filter-consistency analysis, model-probability visualization, Monte Carlo experiments, sensitivity studies, and paired sensor-fusion comparisons.
+- **Automated verification:** C++ and JavaScript test suites covering filter behavior, covariance validity, configuration errors, model-probability changes, CSV compatibility, scene geometry, camera behavior, and full viewer startup.
+
+## Tech Stack
+
+- **Simulation:** C++20 with a dependency-free linear algebra implementation
+- **Estimation:** Extended Kalman Filter and Interacting Multiple Model filter
+- **Visualization:** Vanilla JavaScript with a custom Canvas 2D projection and rendering system
+- **Analysis:** Python, pandas, NumPy, and Matplotlib
+- **Data exchange:** Reproducible CSV trajectories and JSON scenario files
+- **Testing:** Custom dependency-free C++ and JavaScript test suites
+- **Deployment:** GitHub Actions and Vercel
+
+## Key Decisions & Tradeoffs
+
+### Statistical consistency over accuracy alone
+
+Position error was not enough to determine whether the tracker was trustworthy. I added NEES and NIS instrumentation to measure whether the filter's reported covariance matched its real error.
+
+This revealed that the original filter was not simply less accurate during maneuvers. It was confidently wrong.
+
+### An adaptive model bank over one aggressively tuned filter
+
+Increasing process noise helped the Extended Kalman Filter respond to maneuvers, but it also made the estimate unnecessarily uncertain during ordinary flight.
+
+The IMM runs a quiet-cruise model and a maneuver model in parallel, then adjusts their probabilities based on incoming measurements. This preserves steady-flight performance while responding quickly when the target changes behavior.
+
+The tradeoff is approximately twice the computation and slightly conservative uncertainty during benign cruise.
+
+### Six-state models over a larger acceleration-state formulation
+
+Both IMM models use the existing six-state position-and-velocity structure and differ only in process noise. This allows the model bank to reuse the established Jacobians, measurement updates, and matrix implementation.
+
+A full constant-acceleration model could improve consistency during sustained turns, but it would require a larger state, new transition models, and a more complex mixing strategy.
+
+### Recorded simulation output in the viewer
+
+The browser replays generated CSV data instead of running the C++ simulation directly. This keeps the viewer dependency-free and ensures that every displayed frame can be reproduced from a scenario file and seed.
+
+The tradeoff is that changing simulation parameters requires regenerating the trajectory.
+
+### Custom rendering over a 3D framework
+
+The viewer uses a lightweight projection and Canvas API renderer instead of a large graphics framework. This provides complete control over the visual language, keeps the deployment small, and requires no browser build step.
+
+## Results
+
+On the baseline maneuvering scenario:
+
+- Mean NEES improved from 174.18 to 4.33, with an ideal value of 6.
+- Peak NEES fell from approximately 1,470 to 45.
+- Position RMSE improved from 29.46 m to 10.35 m.
+- Position error in the worst 5% of frames fell from 75.40 m to 18.27 m.
+- Overconfident frames fell from 23.9% to 3.7%.
+- Mean NIS per degree of freedom improved from 2.14 to 1.03, with an ideal value of 1.
+
+Across 200 randomized runs:
+
+- 186 of 200 Extended Kalman Filter runs had mean NEES above 30.
+- None of the IMM runs exceeded that threshold.
+- Mean position RMSE improved from 30.95 m to 11.10 m.
+- The worst IMM run remained more consistent than the median Extended Kalman Filter run.
+
+A separate paired sensor experiment found that combining radar and infrared measurements reduced average position error by 36.9% compared with radar alone.
+
+## What the Control Scenario Revealed
+
+The benign cruise scenario removes the maneuver while keeping every other parameter unchanged. In that environment, the constant-velocity assumption is correct, and the conventional Extended Kalman Filter performs slightly better than the model bank.
+
+Its position RMSE is 8.26 m compared with 9.28 m for the IMM, and neither tracker becomes overconfident.
+
+This control matters because it shows that the IMM is not universally better. Its additional uncertainty is unnecessary when the target never maneuvers. Its value comes from robustness when the motion model stops matching reality.
+
+## Current Limitations
+
+The simulation is intentionally focused on estimation and uncertainty rather than operational surveillance. It does not currently model terrain, Earth curvature, clutter, false alarms, sensor bias, multiple targets, or measurement association.
+
+Both IMM models also use a constant-velocity state. A future constant-acceleration model could further improve consistency during sustained high-acceleration maneuvers.
